@@ -41,3 +41,10 @@ def post_message(discord_webhook_url, message_content):
         requests.post(discord_webhook_url, json=message_content)
     except Exception as e:
         return e
+
+def filter_for_old_allocations(allocations, threshold):
+    results = []
+    for allo in allocations:
+        if allo["allocationAgeMinutes"] >= threshold:
+            results.append(allo)
+    return results
