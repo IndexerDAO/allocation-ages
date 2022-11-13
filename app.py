@@ -3,7 +3,7 @@ import sys
 from utils import get_data, get_allocation_ages, create_message_text, post_message, filter_for_old_allocations
 
 def main():
-    allocation_age_threshold=400
+    allocation_age_threshold=sys.argv[3]
 
     query = make_query(sys.argv[1])
     data = get_data(query)
