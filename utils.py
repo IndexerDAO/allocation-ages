@@ -45,6 +45,6 @@ def post_message(discord_webhook_url, message_content):
 def filter_for_old_allocations(allocations, threshold):
     results = []
     for allo in allocations:
-        if allo["allocationAgeMinutes"] >= threshold:
+        if allo["allocationAgeMinutes"] >= float(threshold):
             results.append(allo)
     return results
