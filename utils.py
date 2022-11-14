@@ -17,10 +17,8 @@ def get_allocation_ages(active_allocations):
     for i in range(len(active_allocations)):
         tmp_dict = {
             "id": active_allocations[i]["id"],
-            "status": active_allocations[i]["status"],
-            "closedAt": active_allocations[i]["closedAt"],
             "createdAt": active_allocations[i]["createdAt"],
-            "allocationAgeMinutes": (current_time - active_allocations[i]["createdAt"]) / 60
+            "allocationAgeMinutes": int((current_time - active_allocations[i]["createdAt"]) / 60)
         }
         aged.append(tmp_dict)
     
@@ -41,10 +39,3 @@ def post_message(discord_webhook_url, message_content):
         requests.post(discord_webhook_url, json=message_content)
     except Exception as e:
         return e
-
-def filter_for_old_allocations(allocations, threshold):
-    results = []
-    for allo in allocations:
-        if allo["allocationAgeMinutes"] >= float(threshold):
-            results.append(allo)
-    return results
