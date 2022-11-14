@@ -3,7 +3,7 @@ import time
 
 def make_query(wallet_address, time_delta):
   timestamp = time.time()
-  oldest_allowable_timestamp = (timestamp) - (time_delta*60)
+  oldest_allowable_timestamp = (timestamp) - (float(time_delta)*60)
 
   query = Template("""
   {
