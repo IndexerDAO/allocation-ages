@@ -1,25 +1,27 @@
 from string import Template
-import time
 
-def make_query(wallet_address, time_delta):
-  timestamp = time.time()
-  oldest_allowable_timestamp = (timestamp) - (float(time_delta)*60)
+def get_current_epoch():
 
   query = Template("""
   {
-    allocations(
-      where: {indexer: "$address", status: Active, createdAt_lt: $oldest_timestamp}
-      orderBy: createdAt
-      orderDirection: desc
-    ) {
+    epoches(orderBy: startBlock, orderDirection: desc, first: 1) {
       id
-      createdAt
     }
   }
   """)
 
+  return query.safe_substitute()
+
+def get_old_allocations(wallet_address: str, oldest_allowable_epoch: int):
+  query = Template("""
+  {
+    allocations(where: {activeForIndexer: "$address", createdAtEpoch_lt:$oldest_epoch},) {
+      id,
+      createdAtEpoch
+      }
+  }
+  """)
   return query.safe_substitute(
     address=wallet_address, 
-    oldest_timestamp=int(oldest_allowable_timestamp)
+    oldest_epoch=oldest_allowable_epoch
     )
-  
