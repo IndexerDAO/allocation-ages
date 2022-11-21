@@ -29,7 +29,7 @@ def get_old_allocations(wallet_address: str, oldest_allowable_epoch: int):
 def get_open_allocations(wallet_address: str):
   query = Template("""
   {
-    allocations(where: {activeForIndexer: "$address") {
+    allocations(where: {activeForIndexer: "$address"}) {
       id,
       createdAtEpoch
       }
