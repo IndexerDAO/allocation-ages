@@ -24,8 +24,8 @@ def get_allocation_ages(active_allocations, oldest_epoch):
     
     return aged
 
-def create_message_text(aged_allocations):
-    message = "__**Allocation Ages Report**__\n\n"
+def create_message_text(aged_allocations, current_epoch: int):
+    message = f"__**Allocation Ages Report**__: Epoch {current_epoch}\n\n"
 
     for entry in aged_allocations:
         message += f'{entry["id"]}\n{entry["allocationAgeEpoches"]} epoches old\n\n'
