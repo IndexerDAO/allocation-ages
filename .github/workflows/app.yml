@@ -2,7 +2,7 @@ name: deployment
 
 on:
   schedule:
-     - cron:  '0 * * * *' # every hour on the hour
+     - cron:  '0 */2 * * *' # every two hours on the hour
 
 jobs:
   build:
@@ -22,4 +22,4 @@ jobs:
           
       - name: execute py script
         run: |
-          python -m app ${{ secrets.WALLET_ADDRESS }} ${{ secrets.WEBHOOK_URL }}
+          python -m app ${{ secrets.WALLET_ADDRESS }} ${{ secrets.WEBHOOK_URL }} ${{ secrets.AGE_THRESHOLD }}

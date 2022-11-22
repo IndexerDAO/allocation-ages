@@ -1,34 +1,34 @@
+import time
 import requests
 
 def get_data(query):
     response = requests.post('https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-goerli'
                              '',
-                             json={
-                                "query":query
-                                })
+                             json={"query":query})
 
     if response.status_code == 200: 
-        return response.json()["data"]
+        return response.json()["data"]["allocations"]
     else:
-        raise Exception(f"Query failed with return code {response.staus_code}")
+        raise Exception("Query failed with return code {}".format(response.staus_code))
 
-def get_allocation_ages(active_allocations, oldest_epoch):
+def get_allocation_ages(active_allocations):
+    current_time = time.time()
     aged = []
     for i in range(len(active_allocations)):
         tmp_dict = {
             "id": active_allocations[i]["id"],
-            "createdAtEpoch": active_allocations[i]["createdAtEpoch"],
-            "allocationAgeEpoches": abs(int(active_allocations[i]["createdAtEpoch"] - int(oldest_epoch)))
+            "createdAt": active_allocations[i]["createdAt"],
+            "allocationAgeMinutes": int((current_time - active_allocations[i]["createdAt"]) / 60)
         }
         aged.append(tmp_dict)
     
     return aged
 
-def create_message_text(aged_allocations, current_epoch: int):
-    message = f"__**Allocation Ages Report**__: Epoch {current_epoch}\n\n"
+def create_message_text(aged_allocations):
+    message = "__**Allocation Ages Report**__\n\n"
 
     for entry in aged_allocations:
-        message += f'{entry["id"]}\n{entry["allocationAgeEpoches"]} epoches old\n\n'
+        message += f'{entry["id"]}\n{entry["allocationAgeMinutes"]} minutes old\n\n'
     
     return {
         "content": message
