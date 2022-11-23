@@ -25,7 +25,7 @@ def get_allocation_ages(active_allocations):
     return aged
 
 def create_message_text(aged_allocations):
-    message = "__**Allocation Ages Report**__\n\n"
+    message = "@MIPs Operator\n\n__**Allocation Ages Report**__\n\n"
 
     for entry in aged_allocations:
         message += f'{entry["id"]}\n{entry["allocationAgeMinutes"]} minutes old\n\n'
