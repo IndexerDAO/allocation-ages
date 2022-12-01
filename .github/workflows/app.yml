@@ -1,8 +1,9 @@
 name: deployment
 
 on:
-  schedule:
-     - cron:  '0 */2 * * *' # every two hours on the hour
+  workflow_dispatch: # manual trigger
+#   schedule:
+#      - cron:  '0 */2 * * *' # every two hours on the hour
 
 jobs:
   build:
